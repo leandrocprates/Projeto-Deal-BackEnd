@@ -19,7 +19,8 @@ public class PasswordService {
 
     public void validarCarachetr(String password){
 
-        String input = "RTabBd1-T%304**";
+        //String input = "RTabBd1-T%304**";
+        String input = "123877";
 
         int numberofCharacteres = input.length() ;
         int qtdUpper =  matchCaseGenerico(regexUpperCase,input) ;
@@ -31,6 +32,11 @@ public class PasswordService {
         //boolean requirementsValido = validaRequirementsAtingido(numberofCharacteres,qtdUpper, qtdLower, qtdNumber,qtdSimbol) ;
         //System.out.println(requirementsValido);
 
+        //int qtdDeducaoLetterOnly = deducaoLetterOnly( numberofCharacteres ,  qtdNumber ,  qtdSimbol ) ;
+        //System.out.println(qtdDeducaoLetterOnly);
+
+        int qtdDeducaoNumberOnly = deducaoNumberOnly( numberofCharacteres ,  qtdUpper ,  qtdLower,  qtdSimbol );
+        System.out.println(qtdDeducaoNumberOnly);
     }
 
 
@@ -123,11 +129,30 @@ public class PasswordService {
         int countCase = 0 ;
         Matcher matterCase =  Pattern.compile(regex).matcher(input) ;
         while(matterCase.find()){
-            System.out.println(matterCase.group(0));
+            //System.out.println(matterCase.group(0));
             countCase++;
         }
         return countCase;
     }
+
+
+    public int deducaoLetterOnly(int numberofCharacteres , int qtdNumber , int qtdSimbol ){
+
+        if ( (qtdNumber> 0) || (qtdSimbol>0) ){
+            return 0 ;
+        }
+        return numberofCharacteres * (-1);
+    }
+
+    public int deducaoNumberOnly(int numberofCharacteres , int qtdUpper , int qtdLower, int qtdSimbol ){
+
+        if ( (qtdUpper> 0) || (qtdLower>0) || (qtdSimbol>0) ){
+            return 0 ;
+        }
+        return numberofCharacteres * (-1);
+    }
+
+
 
 
 
