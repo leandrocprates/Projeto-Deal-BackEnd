@@ -20,6 +20,7 @@ public class ColaboradorService {
 
     public void salvarMongoDb(List<ColaboradorModel> colaboradorModel ){
 
+        colaboradorRepository.deleteAll();
         transformarSenha(colaboradorModel);
 
         ColaboradorModelWraaper colaboradorModelWraaper = new ColaboradorModelWraaper();
