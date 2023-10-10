@@ -15,11 +15,41 @@ public class ColaboradorService {
     @Autowired
     private ColaboradorRepository colaboradorRepository ;
 
+    @Autowired
+    private PasswordService passwordService ;
+
     public void salvarMongoDb(List<ColaboradorModel> colaboradorModel ){
+
+        transformarSenha(colaboradorModel);
+
         ColaboradorModelWraaper colaboradorModelWraaper = new ColaboradorModelWraaper();
         colaboradorModelWraaper.setColaboradorModel(colaboradorModel);
         colaboradorRepository.save(colaboradorModelWraaper);
     }
+
+
+    public void transformarSenha(List<ColaboradorModel> colaboradorModel){
+
+        for (ColaboradorModel colNivel1  : colaboradorModel ){
+            buscarScore(colNivel1);
+        }
+        return ;
+    }
+
+
+
+    public void buscarScore(ColaboradorModel colNivel){
+        int score = passwordService.retornaScoreSenha(colNivel.getSenhaColaborador());
+        String textoScore = passwordService.retornaTextoScore(score);
+        System.out.println("score: " + score );
+        System.out.println("textoScore: " + textoScore );
+
+        colNivel.setPorcentagem(score+"%");
+        colNivel.setTexto(textoScore);
+
+    }
+
+
 
     public List<ColaboradorModel> buscarColaborador(){
         ColaboradorModelWraaper colaboradorModelWraaper = colaboradorRepository.findAll().get(0);
