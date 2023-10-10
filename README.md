@@ -10,3 +10,4 @@
 3 ) Interface MongoDB
     http://localhost:8081/
 
+4) Subir aplicação local 
