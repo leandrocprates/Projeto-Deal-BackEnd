@@ -1,0 +1,55 @@
+{
+	"info": {
+		"_postman_id": "0e4d9451-b9ae-426d-9f9a-dc1df51e5b82",
+		"name": "Deal",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30346613"
+	},
+	"item": [
+		{
+			"name": "localhost:8080/salvarcolaborador",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n    {\r\n        \"id\": 1,\r\n        \"nomeColaborador\": \"Leandro\",\r\n        \"senhaColaborador\": \"123\",\r\n        \"porcentagem\": \"\",\r\n        \"texto\": \"\",\r\n        \"refColaborador\": [\r\n            {\r\n                \"id\": 2,\r\n                \"nomeColaborador\": \"Evandro\",\r\n                \"senhaColaborador\": \"456\",\r\n                \"porcentagem\": \"\",\r\n                \"texto\": \"\",\r\n                \"refColaborador\": [\r\n                    {\r\n                        \"id\": 4,\r\n                        \"nomeColaborador\": \"Victor\",\r\n                        \"senhaColaborador\": \"RTabBd1-T%304**\",\r\n                        \"porcentagem\": \"\",\r\n                        \"texto\": \"\",\r\n                        \"refColaborador\": []\r\n                        \r\n                    },\r\n                    {\r\n                        \"id\": 5,\r\n                        \"nomeColaborador\": \"Rafael\",\r\n                        \"senhaColaborador\": \"943\",\r\n                        \"porcentagem\": \"\",\r\n                        \"texto\": \"\",\r\n                        \"refColaborador\": []\r\n                       \r\n                    }\r\n                ]\r\n                \r\n            },\r\n            {\r\n                \"id\": 3,\r\n                \"nomeColaborador\": \"Paula\",\r\n                \"senhaColaborador\": \"AabTT6b93\",\r\n                \"porcentagem\": \"\",\r\n                \"texto\": \"\",\r\n                \"refColaborador\": []\r\n                \r\n            }\r\n        ]\r\n        \r\n    },\r\n    {\r\n        \"id\": 6,\r\n        \"nomeColaborador\": \"Node2\",\r\n        \"senhaColaborador\": \"567\",\r\n        \"porcentagem\": \"\",\r\n        \"texto\": \"\",\r\n        \"refColaborador\": [\r\n            {\r\n                \"id\": 7,\r\n                \"nomeColaborador\": \"Node 2.1\",\r\n                \"senhaColaborador\": \"212\",\r\n                \"porcentagem\": \"\",\r\n                \"texto\": \"\",\r\n                \"refColaborador\": []\r\n                \r\n            }\r\n        ]\r\n        \r\n    },\r\n    {\r\n        \"id\": \"lni028badwz5o9q62mw\",\r\n        \"nomeColaborador\": \"leehfi\",\r\n        \"senhaColaborador\": \"ffff\",\r\n        \"porcentagem\": \"\",\r\n        \"texto\": \"\",\r\n        \"refColaborador\": []\r\n    }\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/salvarcolaborador",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"salvarcolaborador"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/buscarcolaborador",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/buscarcolaborador",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"buscarcolaborador"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
