@@ -11,7 +11,12 @@ public class PasswordService {
     String regexUpperCase ="[A-Z]{1,1}" ;
     String regexLowerCase ="[a-z]{1,1}" ;
     String regexNumberCase ="[0-9]{1,1}" ;
-    String regexSimbolCase = "[!@#\\$%\\^&\\*]{1,1}" ;
+    String regexSimbolCase = "[-!@#\\$%\\^&\\*]{1,1}" ;
+
+    String regexConsecutiveUpperCase = "[A-Z]{1,}" ;
+    String regexConsecutiveLowerCase = "[a-z]{1,}" ;
+    String regexConsecutiveNumberCase = "[0-9]{1,}" ;
+
 
     public void validaPassword(String password){
         validarCarachetr(password);
@@ -19,8 +24,10 @@ public class PasswordService {
 
     public void validarCarachetr(String password){
 
-        //String input = "RTabBd1-T%304**";
-        String input = "123877";
+        String input = "RTabBd1-T%304**";
+        //String input = "123877";
+        //String input = "AabTT6b93";
+
 
         int numberofCharacteres = input.length() ;
         int qtdUpper =  matchCaseGenerico(regexUpperCase,input) ;
@@ -29,26 +36,85 @@ public class PasswordService {
         int qtdSimbol =  matchCaseGenerico(regexSimbolCase,input) ;
         int qtdMiddleNumberSimbol= somarMiddleNumberAndSimbol(input);
 
-        //boolean requirementsValido = validaRequirementsAtingido(numberofCharacteres,qtdUpper, qtdLower, qtdNumber,qtdSimbol) ;
-        //System.out.println(requirementsValido);
 
-        //int qtdDeducaoLetterOnly = deducaoLetterOnly( numberofCharacteres ,  qtdNumber ,  qtdSimbol ) ;
-        //System.out.println(qtdDeducaoLetterOnly);
+        int resultSomaAdition = somarAdditions( numberofCharacteres,
+                                            qtdUpper,  qtdLower,  qtdNumber ,
+                                            qtdSimbol,  qtdMiddleNumberSimbol);
 
-        int qtdDeducaoNumberOnly = deducaoNumberOnly( numberofCharacteres ,  qtdUpper ,  qtdLower,  qtdSimbol );
-        System.out.println(qtdDeducaoNumberOnly);
+
+        int resultSomaDeducao = somardeducoes( numberofCharacteres,
+                                            qtdUpper,  qtdLower,  qtdNumber ,
+                                            qtdSimbol,  qtdMiddleNumberSimbol,  input ) ;
+
+
+        int score = resultSomaAdition - resultSomaDeducao ;
+
+
     }
 
+    public int somarAdditions(int numberofCharacteres,
+                              int qtdUpper, int qtdLower, int qtdNumber ,
+                              int qtdSimbol, int qtdMiddleNumberSimbol){
+
+        int somaBonusCaracteres =  somaBonusCaracteres(numberofCharacteres) ;
+        int somaBonusUppercase = somaBonusUppercase( numberofCharacteres,  qtdUpper);
+        int somaBonusLowercase = somaBonusLowercase( numberofCharacteres, qtdLower) ;
+        int somarBonusNumber = somarBonusNumber(qtdNumber)  ;
+        int somarBonusSimbolo = somarBonusSimbolo( qtdSimbol) ;
+        int somarBonusMiddleNumberSymbol = somarBonusMiddleNumberSymbol(qtdMiddleNumberSimbol) ;
+        int somarBonusRequirements = somarBonusRequirements( numberofCharacteres,
+                                            qtdUpper,  qtdLower,  qtdNumber , qtdSimbol);
+
+
+        //System.out.println("somaBonusCaracteres: " + somaBonusCaracteres );
+        //System.out.println("somaBonusUppercase: " + somaBonusUppercase );
+        //System.out.println("somaBonusLowercase: " + somaBonusLowercase );
+        //System.out.println("somarBonusNumber; " + somarBonusNumber );
+        //System.out.println("somarBonusSimbolo: " + somarBonusSimbolo );
+        //System.out.println("somarBonusMiddleNumberSymbol: " + somarBonusMiddleNumberSymbol );
+        //System.out.println("somarBonusRequirements: " + somarBonusRequirements );
+
+        return (somaBonusCaracteres + somaBonusUppercase + somaBonusLowercase+ somarBonusNumber +
+                somarBonusSimbolo+ somarBonusMiddleNumberSymbol + somarBonusRequirements  ) ;
+
+    }
+
+    public int somardeducoes(int numberofCharacteres,
+                              int qtdUpper, int qtdLower, int qtdNumber ,
+                              int qtdSimbol, int qtdMiddleNumberSimbol, String input ) {
+
+        int qtdDeducaoLetterOnly = deducaoLetterOnly( numberofCharacteres ,  qtdNumber ,  qtdSimbol ) ;
+        int qtdDeducaoNumberOnly = deducaoNumberOnly( numberofCharacteres ,  qtdUpper ,  qtdLower,  qtdSimbol );
+        int qtdDeducaoConsecutiveUpperCase =  deducaoConsecutiveCase( input , regexConsecutiveUpperCase );
+        int qtdDeducaoConsecutiveLowerCase =  deducaoConsecutiveCase( input , regexConsecutiveLowerCase );
+        int qtdDeducaoConsecutiveNumberCase =  deducaoConsecutiveCase( input , regexConsecutiveNumberCase );
+
+        //System.out.println(qtdDeducaoLetterOnly);
+        //System.out.println(qtdDeducaoNumberOnly);
+        //System.out.println(qtdDeducaoConsecutiveUpperCase);
+        //System.out.println(qtdDeducaoConsecutiveLowerCase);
+        //System.out.println(qtdDeducaoConsecutiveNumberCase);
+
+        return (qtdDeducaoLetterOnly + qtdDeducaoNumberOnly + qtdDeducaoConsecutiveUpperCase +
+                qtdDeducaoConsecutiveLowerCase + qtdDeducaoConsecutiveNumberCase ) ;
+
+    }
 
     public int somaBonusCaracteres(int numberofCharacteres){
         return numberofCharacteres * 4;
     }
 
     public int somaBonusUppercase(int numberofCharacteres, int qtdUpper){
+        if (qtdUpper == 0 ){
+            return 0;
+        }
         return (numberofCharacteres - qtdUpper)*2 ;
     }
 
     public int somaBonusLowercase(int numberofCharacteres, int qtdLower){
+        if ( qtdLower == 0  ){
+            return 0;
+        }
         return (numberofCharacteres - qtdLower)*2 ;
     }
 
@@ -153,7 +219,32 @@ public class PasswordService {
     }
 
 
+    public int deducaoConsecutiveCase(String input , String regex ){
+        Matcher matterCase = Pattern.compile(regex).matcher(input);
+        int countSequencia =0;
+        while(matterCase.find()){
+            String sequencia = matterCase.group(0);
+            if ( sequencia.length()>0 ){
+                countSequencia = countSequencia+ (sequencia.length()-1) ;
+            }
+            System.out.println(matterCase.group(0));
+        }
+        return countSequencia ;
+    }
 
 
 
 }
+
+
+/*
+
+        boolean valor = Pattern.compile("[A-Z]{1,1}").matcher("AaB").matches();
+        System.out.println(valor);
+
+        Matcher matterCase = Pattern.compile("[A-Z]{1,}").matcher("ABCDEFaB") ;
+        while(matterCase.find()){
+            System.out.println(matterCase.group(0));
+        }
+
+ */
