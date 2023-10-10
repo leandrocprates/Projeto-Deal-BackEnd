@@ -30,8 +30,14 @@ public class ColaboradorService {
 
     public void transformarSenha(List<ColaboradorModel> colaboradorModel){
 
-        for (ColaboradorModel colNivel1  : colaboradorModel ){
+        for (ColaboradorModel colNivel1 : colaboradorModel ){
             buscarScore(colNivel1);
+            for ( ColaboradorModel colNivel2 : colNivel1.getRefColaborador()){
+                buscarScore(colNivel2);
+                for(ColaboradorModel colNivel3 : colNivel2.getRefColaborador()){
+                    buscarScore(colNivel3);
+                }
+            }
         }
         return ;
     }
@@ -41,8 +47,8 @@ public class ColaboradorService {
     public void buscarScore(ColaboradorModel colNivel){
         int score = passwordService.retornaScoreSenha(colNivel.getSenhaColaborador());
         String textoScore = passwordService.retornaTextoScore(score);
-        System.out.println("score: " + score );
-        System.out.println("textoScore: " + textoScore );
+        //System.out.println("score: " + score );
+        //System.out.println("textoScore: " + textoScore );
 
         colNivel.setPorcentagem(score+"%");
         colNivel.setTexto(textoScore);
