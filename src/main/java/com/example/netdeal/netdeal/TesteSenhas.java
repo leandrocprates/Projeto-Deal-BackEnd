@@ -6,6 +6,7 @@ public class TesteSenhas {
 
     public static void main(String args[]){
         PasswordService passwordService = new PasswordService();
-        passwordService.validaPassword("Rabcd");
+        String input = "RTabBd1-T%304**";
+        passwordService.validaPassword(input);
     }
 }

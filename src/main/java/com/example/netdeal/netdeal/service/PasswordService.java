@@ -19,12 +19,36 @@ public class PasswordService {
 
 
     public void validaPassword(String password){
-        validarCarachetr(password);
+        int score  = retornaScoreSenha(password);
+        System.out.println("score: " + score );
+        String textoScore = retornaTextoScore( score) ;
+        System.out.println("texto: " + textoScore );
     }
 
-    public void validarCarachetr(String password){
 
-        String input = "RTabBd1-T%304**";
+    public String retornaTextoScore(int score){
+        String textScore = "Ruim" ;
+        if (score<=25 ){
+            textScore = "Ruim" ;
+        }
+        if (score>25 && score<=50 ){
+            textScore = "Fraco" ;
+        }
+        if (score>50 && score<=75 ){
+            textScore = "Bom" ;
+        }
+        if (score>75 ){
+            textScore = "Forte" ;
+        }
+
+        return textScore ;
+    }
+
+
+    public int retornaScoreSenha(String password){
+
+        String input = password ;
+        //String input = "RTabBd1-T%304**";
         //String input = "123877";
         //String input = "AabTT6b93";
 
@@ -49,6 +73,7 @@ public class PasswordService {
 
         int score = resultSomaAdition - resultSomaDeducao ;
 
+        return score ;
 
     }
 
@@ -227,7 +252,7 @@ public class PasswordService {
             if ( sequencia.length()>0 ){
                 countSequencia = countSequencia+ (sequencia.length()-1) ;
             }
-            System.out.println(matterCase.group(0));
+            //System.out.println(matterCase.group(0));
         }
         return countSequencia ;
     }
