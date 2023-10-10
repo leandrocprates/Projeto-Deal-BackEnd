@@ -1,4 +1,4 @@
 # Projeto-Deal-BackEnd
 
 
-Modelo requisicao dentro do POSTman  **Deal.postman_collection.json**
+Modelo requisicao dentro do Postman  **Deal.postman_collection.json**
